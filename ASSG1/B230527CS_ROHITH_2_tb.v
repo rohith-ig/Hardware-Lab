@@ -1,20 +1,90 @@
-module subtractor_tb;
+module fsm1_tb;
 
-reg [7:0]a,b;
-wire [7:0]d;
-wire sign;
+reg clk;
+reg rst;
+reg [1:0] in;
 
-subtractor s1(.a(a),.b(b),.d(d),.sign(sign));
+wire out;
+wire [1:0] change;
 
-integer i,j;
+vm f1 (
+    .clk(clk), 
+    .rst(rst), 
+    .in(in), 
+    .out(out), 
+    .change(change)
+);
 
 initial begin 
-	for (i=0;i<256;i=i+1) begin
-		a = i;
-		for (j=0;j<256;j=j+1) begin
-			b = j;
-			#10;
-		end
-	end
+	clk = 1'b1;
+	repeat(1000) #5 clk = ~clk;
+	$finish;
 end
+
+initial begin
+	 #5;
+    rst = 0;
+    #5;
+    rst = 1;
+	 #10
+    in = 2'b00;
+    #10;
+    in = 2'b01;
+    #10;
+    in = 2'b10;
+    #10;
+
+
+    in = 2'b01;
+    #10;
+
+
+    in = 2'b10;
+    #10;
+
+     
+    in = 2'b10;
+    #10;
+
+
+    in = 2'b10;
+    #10;
+    in = 2'b10;
+    #10;
+
+    in = 2'b10;
+    #10;
+    in = 2'b10;
+    #10;
+    in = 2'b10;
+    #10;
+
+    in = 2'b10;
+    #10;
+    in = 2'b10;
+    #10;
+    in = 2'b10;
+    #10;
+    in = 2'b01;
+    #10;
+    in = 2'b10;
+    #10;
+    in = 2'b10;
+    #10;
+    in = 2'b10;
+    #10;
+    in = 2'b10;
+    #10;
+    
+
+
+    in = 2'b10;
+    #10;
+    in = 2'b10;
+    #10;
+    in = 2'b01;
+    #10;
+    in = 2'b10;
+end
+
 endmodule

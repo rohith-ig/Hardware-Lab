@@ -1,30 +1,25 @@
-module adder_tb;
+module fsm_tb;
 
-reg [7:0]a,b;
-reg cin;
-wire [7:0]s;
-wire cout;
+reg x,clk,reset;
 
-adder s1(.a(a),.b(b),.cin(cin),.s(s),.cout(cout));
+wire y;
 
-integer i,j;
+fsmx f1(clk,x,reset,y);
 
 initial begin 
-	cin = 0;
-	for (i=0;i<256;i=i+1) begin
-		a = i;
-		for (j=0;j<256;j=j+1) begin
-			b = j;
-			#10;
-		end
-	end
-	cin = 1;
-	for (i=0;i<256;i=i+1) begin
-		a = i;
-		for (j=0;j<256;j=j+1) begin
-			b = j;
-			#10;
-		end
-	end
+	clk = 1'b1;
+	repeat(2000) #5 clk = ~clk;
+	$finish;
 end
+
+initial begin 
+		#5 reset=0;
+		#5 reset=1;
+		#10 x=1;
+		#10 x=1;
+		#10 x=0;
+		#10 x=1;
+	end
+	always #10 x = $random;
+
 endmodule
